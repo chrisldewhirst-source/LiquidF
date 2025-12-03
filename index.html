@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Foundry | Scale Efficiently Through Intelligent Automation</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='lG' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2300D9FF'/%3E%3Cstop offset='100%25' style='stop-color:%230099CC'/%3E%3C/linearGradient%3E%3ClinearGradient id='fG' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B35'/%3E%3Cstop offset='100%25' style='stop-color:%23FF8C42'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='%230A0E27'/%3E%3Cpath d='M 32 22 Q 30 33 32 44 Q 35 50 38 52 L 38 62 Q 38 67 44 70 L 56 70 Q 62 67 62 62 L 62 52 Q 65 50 68 44 Q 70 33 68 22 Q 66 16 62 13 Q 58 11 55 13 Q 52 16 50 22 Q 48 16 45 13 Q 42 11 38 13 Q 34 16 32 22 Z' fill='url(%23lG)'/%3E%3Cellipse cx='50' cy='33' rx='9' ry='14' fill='%2300D9FF' opacity='0.7'/%3E%3Cpath d='M 26 72 L 38 60 L 62 60 L 74 72 L 72 84 L 28 84 Z' fill='url(%23fG)'/%3E%3Crect x='42' y='76' width='16' height='6' rx='1' fill='%23FF8C42'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A0E27;
+            --accent: #00D9FF;
+            --accent-warm: #FF6B35;
+            --text: #E8EBF7;
+            --text-muted: #8B92B5;
+            --surface: #151937;
+            --surface-light: #1E2449;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Animated gradient background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0A0E27 0%, #151937 50%, #0A0E27 100%);
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 14, 39, 0.7);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            margin-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.9; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #0099CC 100%);
+            color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--surface-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .section-label {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.1);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(255, 107, 53, 0.2) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--surface);
+            border-top: 1px solid var(--surface-light);
+            border-bottom: 1px solid var(--surface-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Process Section */
+        .process-steps {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.2s; }
+        .step:nth-child(3) { animation-delay: 0.3s; }
+        .step:nth-child(4) { animation-delay: 0.4s; }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent) 0%, #0099CC 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            border-radius: 24px;
+            padding: 5rem 3rem;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid var(--accent);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.1);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cta-section p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            border-top: 1px solid var(--surface-light);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+            }
+
+            .hero {
+                margin-top: 100px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .section {
+                padding: 5rem 5%;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                flex-direction: column;
+            }
+
+            .cta-section {
+                padding: 3rem 2rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* ROI Calculator Section */
+        .roi-calculator {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid var(--surface-light);
+        }
+
+        .calc-input-group {
+            margin-bottom: 2rem;
+        }
+
+        .calc-input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--surface-light);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .roi-results {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .roi-metric {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .roi-metric h4 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-metric .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Case Studies */
+        .case-study {
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-study::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-warm) 100%);
+        }
+
+        .case-study-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .case-study-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .case-study-meta {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .case-study-badge {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .case-study-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 217, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .case-study-challenge,
+        .case-study-solution {
+            margin-bottom: 1.5rem;
+        }
+
+        .case-study-challenge h4,
+        .case-study-solution h4 {
+            color: var(--accent);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Pricing Tiers */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--surface);
+            border: 2px solid var(--surface-light);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .pricing-tier {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price-note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(139, 146, 181, 0.1);
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Value Proposition Cards */
+        .value-props {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 3rem auto;
+        }
+
+        .value-card {
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .value-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-card h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <svg width="240" height="50" viewBox="0 0 280 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+                <defs>
+                    <linearGradient id="liquidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00D9FF;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#0099CC;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="foundryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#00D9FF;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#0099CC;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FF6B35;stop-opacity:0.8" />
+                    </linearGradient>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <g transform="translate(5, 5)">
+                    <circle cx="25" cy="25" r="23" fill="url(#iconGrad)" opacity="0.15"/>
+                    <path d="M 16 12 Q 15 17 16 22 Q 17 25 19 26 L 19 30 Q 19 33 22 34 L 28 34 Q 31 33 31 30 L 31 26 Q 33 25 34 22 Q 35 17 34 12 Q 33 9 31 7 Q 29 6 28 7 Q 27 8 25 12 Q 24 8 23 7 Q 22 6 20 7 Q 18 9 16 12 Z" fill="url(#liquidGrad)" filter="url(#glow)" opacity="0.9"/>
+                    <ellipse cx="25" cy="16" rx="4.5" ry="6.5" fill="#00D9FF" opacity="0.7"/>
+                    <path d="M 14 36 L 19 30 L 31 30 L 36 36 L 35 41 L 15 41 Z" fill="url(#foundryGrad)" opacity="0.8"/>
+                    <rect x="21" y="37" width="8" height="3" rx="0.5" fill="#FF8C42" opacity="0.9"/>
+                    <circle cx="14" cy="32" r="1" fill="#00D9FF" opacity="0.8"/>
+                    <circle cx="36" cy="32" r="1" fill="#FF6B35" opacity="0.8"/>
+                </g>
+                <text x="62" y="37" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="28" font-weight="700" letter-spacing="-1" fill="url(#liquidGrad)">
+                    Liquid<tspan fill="url(#foundryGrad)">Foundry</tspan>
+                </text>
+            </svg>
+        </div>
+        <ul>
+            <li><a href="#roi-calculator">ROI</a></li>
+            <li><a href="#services">Solutions</a></li>
+            <li><a href="#case-studies">Results</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label mono">⚡ EFFICIENCY OVER HEADCOUNT</span>
+            <h1>Scale Your Business <span class="highlight">Without Adding Headcount</span></h1>
+            <p>We help small to medium-sized businesses scale efficiently through agentic workflows and intelligent integrations. Replace cost and complexity with low-cost automation that delivers measurable ROI.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Book a 30-Min Discovery Call</a>
+                <a href="#roi-calculator" class="btn btn-secondary">Calculate Your ROI</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- ROI Calculator Section -->
+    <section id="roi-calculator" class="section">
+        <div class="section-header">
+            <div class="section-label">SEE THE IMPACT</div>
+            <h2>Calculate Your Automation ROI</h2>
+            <p>See how much you could save by replacing manual processes with intelligent automation.</p>
+        </div>
+        <div class="roi-calculator">
+            <div class="calc-input-group">
+                <label for="team-size">How many people handle manual, repetitive tasks?</label>
+                <input type="number" id="team-size" placeholder="e.g., 5" value="5" min="1">
+            </div>
+            <div class="calc-input-group">
+                <label for="hours-week">Hours per week spent on repetitive work (per person)</label>
+                <input type="number" id="hours-week" placeholder="e.g., 15" value="15" min="1">
+            </div>
+            <div class="calc-input-group">
+                <label for="hourly-rate">Average hourly cost per employee (£)</label>
+                <input type="number" id="hourly-rate" placeholder="e.g., 35" value="35" min="1">
+            </div>
+            <div class="calc-input-group">
+                <label for="automation-level">Expected automation level</label>
+                <select id="automation-level">
+                    <option value="40">Conservative (40% time saved)</option>
+                    <option value="60" selected>Moderate (60% time saved)</option>
+                    <option value="80">Aggressive (80% time saved)</option>
+                </select>
+            </div>
+            <div class="roi-results">
+                <div class="roi-metric">
+                    <h4>Current Annual Cost</h4>
+                    <div class="value" id="current-cost">£136,500</div>
+                </div>
+                <div class="roi-metric">
+                    <h4>Potential Annual Savings</h4>
+                    <div class="value" id="annual-savings">£81,900</div>
+                </div>
+                <div class="roi-metric">
+                    <h4>Hours Reclaimed Per Year</h4>
+                    <div class="value" id="hours-saved">2,340</div>
+                </div>
+                <div class="roi-metric">
+                    <h4>ROI Timeline</h4>
+                    <div class="value" id="roi-months">~3 months</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#contact" class="btn btn-primary">Discuss Your Numbers</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="section" style="padding: 5rem 5%;">
+        <div class="value-props">
+            <div class="value-card">
+                <span class="value-number">3-6</span>
+                <h4>Months to ROI</h4>
+                <p>Typical payback period for high-impact automations</p>
+            </div>
+            <div class="value-card">
+                <span class="value-number">60%</span>
+                <h4>Cost Reduction</h4>
+                <p>Average operational cost savings vs. hiring</p>
+            </div>
+            <div class="value-card">
+                <span class="value-number">24/7</span>
+                <h4>Always On</h4>
+                <p>Automation works around the clock without breaks</p>
+            </div>
+            <div class="value-card">
+                <span class="value-number">£0</span>
+                <h4>Headcount Cost</h4>
+                <p>Scale without additional salary, benefits, or training</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="section-header">
+            <div class="section-label">WHAT WE DO</div>
+            <h2>Good, Better, Best Solutions</h2>
+            <p>Years of expertise helping SMBs identify automation opportunities and implement the right level of solution—from simple integrations to fully agentic workflows.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Good Solutions</h3>
+                <p>Simple automations and integrations that connect your existing tools, eliminate manual data entry, and free up valuable time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Better Solutions</h3>
+                <p>Smart workflows that orchestrate multiple processes, add decision-making logic, and handle exceptions automatically.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Best Solutions</h3>
+                <p>Fully agentic workflows with AI-powered decision making, natural language interfaces, and autonomous problem-solving capabilities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>Process Discovery</h3>
+                <p>We map your workflows using our "X takes Y time, if wrong risk is Z" framework to identify the highest-value automation opportunities.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Integration Expertise</h3>
+                <p>Connect your platforms and tools into seamless workflows with appropriate governance and control at every step.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>ROI Transparency</h3>
+                <p>Clear cost comparisons showing automation savings vs. human headcount, so you understand the value from day one.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="section">
+        <div class="section-header">
+            <div class="section-label">PROVEN RESULTS</div>
+            <h2>Real Impact, Real Businesses</h2>
+            <p>See how we've helped SMBs scale efficiently without adding headcount.</p>
+        </div>
+        
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div>
+                        <h3 class="case-study-title">Professional Services Firm</h3>
+                        <p class="case-study-meta">Technology Consulting · 45 employees</p>
+                    </div>
+                    <span class="case-study-badge">Finance & Operations</span>
+                </div>
+                
+                <div class="case-study-challenge">
+                    <h4>The Challenge</h4>
+                    <p>Finance team spending 35+ hours weekly on invoice reconciliation between HubSpot CRM and Xero accounting system. Manual data entry causing errors, delayed billing, and cash flow issues. Company wanted to scale client base without hiring additional finance staff.</p>
+                </div>
+                
+                <div class="case-study-solution">
+                    <h4>The Solution</h4>
+                    <p>Implemented automated invoice reconciliation workflow connecting HubSpot, Xero, and Teams. System auto-matches invoices to payments, flags discrepancies for review, sends payment reminders, and updates financial dashboards in real-time.</p>
+                </div>
+                
+                <div class="case-study-metrics">
+                    <div class="metric-item">
+                        <span class="metric-value">80%</span>
+                        <span class="metric-label">Time Saved</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">£28K</span>
+                        <span class="metric-label">Annual Savings</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">2.2mo</span>
+                        <span class="metric-label">ROI Payback</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">548%</span>
+                        <span class="metric-label">Year 1 ROI</span>
+                    </div>
+                </div>
+                
+                <p><em>"We were planning to hire another finance person. Instead, we invested in automation and our existing team now handles 3x the volume. The ROI was immediate."</em></p>
+            </div>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div>
+                        <h3 class="case-study-title">SaaS Company</h3>
+                        <p class="case-study-meta">HR Software · 28 employees</p>
+                    </div>
+                    <span class="case-study-badge">Sales & Marketing</span>
+                </div>
+                
+                <div class="case-study-challenge">
+                    <h4>The Challenge</h4>
+                    <p>Sales team manually qualifying 200+ inbound leads per month. Average 45 minutes per lead for initial research, BANT qualification, and CRM data entry. High-value opportunities getting lost in the noise, conversion rates stagnating at 8%.</p>
+                </div>
+                
+                <div class="case-study-solution">
+                    <h4>The Solution</h4>
+                    <p>Deployed AI-powered lead qualification system with automated scoring, intent detection, company research enrichment, and intelligent routing. System qualifies leads 24/7, prioritizes hot prospects, and delivers complete briefing packs to sales team.</p>
+                </div>
+                
+                <div class="case-study-metrics">
+                    <div class="metric-item">
+                        <span class="metric-value">75%</span>
+                        <span class="metric-label">Time Saved</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">3.2x</span>
+                        <span class="metric-label">More Qualified Leads</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">18%</span>
+                        <span class="metric-label">Conversion Rate</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">4.1mo</span>
+                        <span class="metric-label">ROI Payback</span>
+                    </div>
+                </div>
+                
+                <p><em>"Our sales team went from drowning in unqualified leads to focusing exclusively on high-intent prospects. Pipeline quality transformed overnight."</em></p>
+            </div>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div>
+                        <h3 class="case-study-title">E-commerce Retailer</h3>
+                        <p class="case-study-meta">Home Goods · 18 employees</p>
+                    </div>
+                    <span class="case-study-badge">Customer Experience</span>
+                </div>
+                
+                <div class="case-study-challenge">
+                    <h4>The Challenge</h4>
+                    <p>Cart abandonment rate of 72%, typical for e-commerce but still representing £180K in lost annual revenue. Limited resources for personalized follow-up. Manual email campaigns showing 2% recovery rate.</p>
+                </div>
+                
+                <div class="case-study-solution">
+                    <h4>The Solution</h4>
+                    <p>Built multi-channel cart recovery system with email + SMS, dynamic incentive engine (adjusts offers based on cart value and customer history), urgency triggers, and inventory awareness. Fully automated across 1,200+ monthly abandonments.</p>
+                </div>
+                
+                <div class="case-study-metrics">
+                    <div class="metric-item">
+                        <span class="metric-value">23%</span>
+                        <span class="metric-label">Recovery Rate</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">£41K</span>
+                        <span class="metric-label">Recovered Revenue</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">100%</span>
+                        <span class="metric-label">Automated</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-value">1.7mo</span>
+                        <span class="metric-label">ROI Payback</span>
+                    </div>
+                </div>
+                
+                <p><em>"The system works 24/7 recovering sales we would have lost. It's like having a tireless sales team that never sleeps and costs us almost nothing to run."</em></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>60%</h3>
+                <p>Lower operational costs</p>
+            </div>
+            <div class="stat-item">
+                <h3>3-6mo</h3>
+                <p>Typical ROI timeline</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Automated operations</p>
+            </div>
+            <div class="stat-item">
+                <h3>$0</h3>
+                <p>Additional headcount cost</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="section">
+        <div class="section-header">
+            <div class="section-label">HOW IT WORKS</div>
+            <h2>Our Discovery-First Approach</h2>
+            <p>We start by understanding your business challenges before recommending solutions—ensuring the right fit for your needs.</p>
+        </div>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Discovery: What, How, and Risk</h3>
+                    <p>We ask: What do you do? How do you do it? What happens if it goes wrong? Using our "We do X, it takes Y time, if wrong our risk/exposure is Z" framework to map your workflows and identify opportunities.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Analysis: Tools, Platforms & Governance</h3>
+                    <p>We identify which tools and platforms in your workflow should be automated and connected, plus determine the appropriate level of control and governance needed.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Value Mapping: Cost vs. Automation</h3>
+                    <p>We compare the current cost of human resources against automation solutions, showing clear ROI and presenting Good, Better, Best options tailored to your budget and needs.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Implementation & Optimization</h3>
+                    <p>We build and deploy your chosen solution with minimal disruption, then continuously monitor and refine to ensure maximum value as your business evolves.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing & Engagement Models -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-label">HOW WE ENGAGE</div>
+            <h2>Flexible Engagement Models</h2>
+            <p>Choose the approach that fits your timeline, budget, and ambition.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-tier">Discovery</div>
+                <h3>Blueprint Workshop</h3>
+                <div class="price">£1,500</div>
+                <div class="price-note">2-week structured discovery</div>
+                <ul class="pricing-features">
+                    <li>Complete process mapping using our X-Y-Z framework</li>
+                    <li>Opportunity identification & prioritization</li>
+                    <li>Full automation blueprint report</li>
+                    <li>ROI analysis for each workflow</li>
+                    <li>Good, Better, Best solution recommendations</li>
+                    <li>12-month implementation roadmap</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Start Discovery</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <span class="featured-badge">Most Popular</span>
+                <div class="pricing-tier">Proof of Concept</div>
+                <h3>Validation Build</h3>
+                <div class="price">£3,500</div>
+                <div class="price-note">3-4 weeks · 1-2 automations</div>
+                <ul class="pricing-features">
+                    <li>Build 1-2 high-impact automations</li>
+                    <li>Validate feasibility & ROI assumptions</li>
+                    <li>Full testing & deployment</li>
+                    <li>Documentation & knowledge transfer</li>
+                    <li>30-day post-launch support</li>
+                    <li>Foundation for scaling to more workflows</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary" style="width: 100%;">Build a Proof</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-tier">Full Implementation</div>
+                <h3>Scale Package</h3>
+                <div class="price">£15K+</div>
+                <div class="price-note">8-12 weeks · 5-10 automations</div>
+                <ul class="pricing-features">
+                    <li>Deliver complete automation roadmap</li>
+                    <li>5-10 integrated workflows</li>
+                    <li>Cross-system orchestration</li>
+                    <li>Governance & error handling</li>
+                    <li>Team training & handover</li>
+                    <li>90-day optimization support</li>
+                </ul>
+                <a href="#contact" class="btn btn-secondary" style="width: 100%;">Scale Now</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 4rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <h3 style="margin-bottom: 1rem;">Ongoing Support & Maintenance</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Keep your automations running smoothly with our Platform & Maintenance service</p>
+            <div style="background: var(--surface); border: 1px solid var(--surface-light); border-radius: 12px; padding: 2rem; display: inline-block;">
+                <div style="font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">£500/month</div>
+                <div style="color: var(--text-muted); margin-bottom: 1.5rem;">per bundle of up to 3 automations</div>
+                <div style="text-align: left; max-width: 400px;">
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid rgba(139, 146, 181, 0.1);">✓ Hosting & infrastructure monitoring</div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid rgba(139, 146, 181, 0.1);">✓ Error logging & alerts</div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid rgba(139, 146, 181, 0.1);">✓ Uptime monitoring & health checks</div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid rgba(139, 146, 181, 0.1);">✓ Automated backups</div>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid rgba(139, 146, 181, 0.1);">✓ 2 hours monthly maintenance</div>
+                    <div style="padding: 0.5rem 0;">✓ Priority support response</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="cta-section">
+            <h2>Ready for a No-Obligation Discovery Call?</h2>
+            <p>In just 30-45 minutes, we'll explore your workflows, identify automation opportunities, and show you the potential ROI—with zero commitment required.</p>
+            <div style="margin: 2rem 0; padding: 2rem; background: rgba(0, 217, 255, 0.05); border-radius: 12px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <h4 style="color: var(--accent); margin-bottom: 1rem; text-align: center;">We'll discuss:</h4>
+                <div style="display: grid; gap: 0.75rem;">
+                    <div style="display: flex; gap: 0.75rem; align-items: start;">
+                        <span style="color: var(--accent); font-weight: 700; flex-shrink: 0;">✓</span>
+                        <span>What you do, how you do it, and what happens when things go wrong</span>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: start;">
+                        <span style="color: var(--accent); font-weight: 700; flex-shrink: 0;">✓</span>
+                        <span>Your current tools, platforms, and integration opportunities</span>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: start;">
+                        <span style="color: var(--accent); font-weight: 700; flex-shrink: 0;">✓</span>
+                        <span>Potential ROI and payback timelines specific to your business</span>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: start;">
+                        <span style="color: var(--accent); font-weight: 700; flex-shrink: 0;">✓</span>
+                        <span>Good, Better, Best automation options that fit your budget</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="/cdn-cgi/l/email-protection#7a121f1616153a16130b0f131e1c150f141e08035419151745090f18101f190e473e130919150c1f08035f484a391b16165f484a281f0b0f1f090e5c18151e034732135f48395f484a335d1e5f484a1613111f5f484a0e155f484a0919121f1e0f161f5f484a1b5f484a494a571713140f0e1f5f484a1e130919150c1f08035f484a191b16165f484a0e155f484a1e1309190f09095f484a1b0f0e15171b0e1315145f484a150a0a15080e0f14130e131f095f484a1c15085f484a17035f484a180f0913141f090954" class="btn btn-primary">Book Your Discovery Call</a>
+            </div>
+            <p style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted);">No sales pressure. Just a genuine conversation about what's possible.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Liquid Foundry. Forging efficient pathways to growth.</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.feature-card, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // ROI Calculator
+        function calculateROI() {
+            const teamSize = parseInt(document.getElementById('team-size').value) || 0;
+            const hoursPerWeek = parseInt(document.getElementById('hours-week').value) || 0;
+            const hourlyRate = parseInt(document.getElementById('hourly-rate').value) || 0;
+            const automationLevel = parseInt(document.getElementById('automation-level').value) || 0;
+
+            // Calculate annual figures
+            const totalWeeklyHours = teamSize * hoursPerWeek;
+            const annualHours = totalWeeklyHours * 52;
+            const currentAnnualCost = annualHours * hourlyRate;
+            
+            // Calculate savings
+            const hoursSaved = annualHours * (automationLevel / 100);
+            const annualSavings = hoursSaved * hourlyRate;
+            
+            // Estimate automation cost (assuming £5K average for initial setup)
+            const estimatedAutomationCost = 5000;
+            const roiMonths = (estimatedAutomationCost / (annualSavings / 12)).toFixed(1);
+
+            // Update display
+            document.getElementById('current-cost').textContent = `£${currentAnnualCost.toLocaleString()}`;
+            document.getElementById('annual-savings').textContent = `£${Math.round(annualSavings).toLocaleString()}`;
+            document.getElementById('hours-saved').textContent = Math.round(hoursSaved).toLocaleString();
+            document.getElementById('roi-months').textContent = `~${roiMonths} months`;
+        }
+
+        // Add event listeners to all calculator inputs
+        document.getElementById('team-size').addEventListener('input', calculateROI);
+        document.getElement
