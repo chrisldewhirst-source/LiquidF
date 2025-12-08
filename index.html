@@ -1321,4 +1321,12 @@
 
         // Add event listeners to all calculator inputs
         document.getElementById('team-size').addEventListener('input', calculateROI);
-        document.getElement
+        document.getElementById('hours-week').addEventListener('input', calculateROI);
+        document.getElementById('hourly-rate').addEventListener('input', calculateROI);
+        document.getElementById('automation-level').addEventListener('change', calculateROI);
+
+        // Initial calculation on page load
+        calculateROI();
+    </script>
+</body>
+</html>
