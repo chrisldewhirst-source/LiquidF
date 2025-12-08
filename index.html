@@ -145,6 +145,27 @@
             animation: fadeInUp 0.8s ease-out 0.3s backwards;
         }
 
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out 0.1s backwards;
+        }
+
+        .hero-logo img {
+            filter: drop-shadow(0 10px 30px rgba(0, 217, 255, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .hero-logo img:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         @keyframes fadeInUp {
             from { transform: translateY(40px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -798,6 +819,9 @@
 
     <section class="hero">
         <div class="hero-content">
+            <div class="hero-logo">
+                <img src="logo-uploaded.png" alt="Liquid Foundry" style="max-width: 400px; width: 100%; height: auto; margin-bottom: 2rem;">
+            </div>
             <span class="hero-label mono">⚡ EFFICIENCY OVER HEADCOUNT</span>
             <h1>Scale Your Business <span class="highlight">Without Adding Headcount</span></h1>
             <p>We help small to medium-sized businesses scale efficiently through agentic workflows and intelligent integrations. Replace cost and complexity with low-cost automation that delivers measurable ROI.</p>
