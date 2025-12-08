@@ -153,12 +153,17 @@
         }
 
         .hero-logo img {
-            filter: drop-shadow(0 10px 30px rgba(0, 217, 255, 0.2));
-            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+            padding: 2.5rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
         .hero-logo img:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 217, 255, 0.25);
         }
 
         @keyframes fadeIn {
