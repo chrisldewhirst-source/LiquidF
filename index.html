@@ -876,6 +876,11 @@
                     <div class="value" id="hours-saved">2,340</div>
                 </div>
                 <div class="roi-metric">
+                    <h4>Equivalent FTE Saved</h4>
+                    <div class="value" id="fte-saved">1.1 FTE</div>
+                    <small style="color: var(--text-muted); font-size: 0.875rem; display: block; margin-top: 0.5rem;">Full-time employees worth of work</small>
+                </div>
+                <div class="roi-metric">
                     <h4>ROI Timeline</h4>
                     <div class="value" id="roi-months">~3 months</div>
                 </div>
@@ -1308,6 +1313,10 @@
             const hoursSaved = annualHours * (automationLevel / 100);
             const annualSavings = hoursSaved * hourlyRate;
             
+            // Calculate FTE saved (assuming 2080 working hours per year = 40 hrs/week × 52 weeks)
+            const standardFTEHours = 2080;
+            const fteSaved = (hoursSaved / standardFTEHours).toFixed(1);
+            
             // Estimate automation cost (assuming £5K average for initial setup)
             const estimatedAutomationCost = 5000;
             const roiMonths = (estimatedAutomationCost / (annualSavings / 12)).toFixed(1);
@@ -1316,6 +1325,7 @@
             document.getElementById('current-cost').textContent = `£${currentAnnualCost.toLocaleString()}`;
             document.getElementById('annual-savings').textContent = `£${Math.round(annualSavings).toLocaleString()}`;
             document.getElementById('hours-saved').textContent = Math.round(hoursSaved).toLocaleString();
+            document.getElementById('fte-saved').textContent = `${fteSaved} FTE`;
             document.getElementById('roi-months').textContent = `~${roiMonths} months`;
         }
 
